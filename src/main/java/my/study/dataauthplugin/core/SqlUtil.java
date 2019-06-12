@@ -36,7 +36,7 @@ public class SqlUtil {
         Executor executor = (Executor) invocation.getTarget();
         BoundSql boundSql = args.length == 6 ? (BoundSql) args[5] : ms.getBoundSql(parameterObject);
         //反射获取动态参数
-        Map<String, Object> additionalParameters = (Map<String, Object>) additionalParametersField.get(boundSql);
+        Map<String, Object> additionalParameters = (Map<String, Object>) additionalParametersField.get(ms.getBoundSql(parameterObject));
 
         //生成数据权限查询的缓存 key
         CacheKey authDataKey = executor.createCacheKey(ms, parameterObject, rowBounds, boundSql);
@@ -58,14 +58,17 @@ public class SqlUtil {
 
     private String getAuthDataSql(MappedStatement ms, BoundSql boundSql, Object parameterObject, RowBounds rowBounds, CacheKey authDataKey) {
         String sql = boundSql.getSql();
-        StringBuilder sqlBuilder = new StringBuilder(sql.length() + 20);
         UserContext uc = UserContextHolder.userContextThreadLocal.get();
 
-        uc.getConditions().forEach(condition -> buildDataSql(sql, sqlBuilder, uc.getIds(), condition));
-        return sqlBuilder.toString();
+        for (int i = 0; i < uc.getConditions().size(); i++) {
+            sql = buildDataSql(sql, uc.getIds(), uc.getConditions().get(i));
+        }
+
+        return sql;
     }
 
-    private void buildDataSql(String sql, StringBuilder sqlBuilder, List<Integer> shopIds, UserContext.Condition condition) {
+    private String buildDataSql(String sql, List<Integer> shopIds, UserContext.Condition condition) {
+        StringBuilder sqlBuilder = new StringBuilder(sql.length() + 20);
         String field = condition.getField();
         String tableName = condition.getTableName();
         // 获取字段的索引
@@ -77,7 +80,7 @@ public class SqlUtil {
             }
         }
         if(tableNameIndex == -1) {
-            return;
+            return sql;
         }
         // 获取距离字段最近的第一个where的索引
         int firstWhereIndex = sql.indexOf("where", tableNameIndex);
@@ -85,7 +88,7 @@ public class SqlUtil {
             firstWhereIndex = sql.indexOf("WHERE", tableNameIndex);
         }
         if(firstWhereIndex == -1) {
-            return;
+            return sql;
         }
         // 截取 字段索引 到 第一个where索引 的字符串
         String splitTarget = sql.substring(tableNameIndex, firstWhereIndex + 5);
@@ -95,6 +98,8 @@ public class SqlUtil {
         sqlBuilder.append(splitTarget);
         sqlBuilder.append(" ").append(tableName).append(".").append(field).append(" in (").append(formatIn(shopIds)).append(") and ");
         sqlBuilder.append(sqlArr[1]);
+
+        return sqlBuilder.toString();
     }
 
     private String formatIn(List<Integer> shopIds) {
