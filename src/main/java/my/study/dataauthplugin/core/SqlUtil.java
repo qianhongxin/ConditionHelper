@@ -23,6 +23,8 @@ public class SqlUtil {
         return doIntercept(invocation);
     }
 
+    // Pagehelper插件中有不分页时，intercept中执行resultList = (List) invocation.proceed();直接执行当前pagehelper代理对象的目标对象的调用。
+    // 我这里没有，因为我在DataAuthenticationPlugin的plugin方法中做了是否代理的判断，只要代理，必然执行。但是最好这里还是判断下
     public Object doIntercept(Invocation invocation) throws Throwable {
         //获取拦截方法的参数
         Object[] args = invocation.getArgs();
@@ -49,7 +51,22 @@ public class SqlUtil {
         for (String key : additionalParameters.keySet()) {
             authDataBoundSql.setAdditionalParameter(key, additionalParameters.get(key));
         }
-        //执行查询
+        // 执行查询, 当前的executor可能是代理对象，也可能是执行数据库操作的executor对象
+        // 如果是代理对象，则执行的是Plugin的invoke方法（Plugin是InvocationHandler）
+        //public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        //    try {
+        //      // 获取 method 所属类或接口的字节码对象
+        //      Set<Method> methods = signatureMap.get(method.getDeclaringClass());
+        //      // 判断 methods 中是否包括 method，包含则执行 拦截器的 intercept 方法。 代理创建时，不会根据method判断是否创建，只要                   type等格式对就创建
+        //      if (methods != null && methods.contains(method)) {
+        //        return interceptor.intercept(new Invocation(target, method, args));
+        //      }
+        //      // 调用 method 的 invoke 方法，进入下一层调用
+        //      return method.invoke(target, args);
+        //    } catch (Exception e) {
+        //      throw ExceptionUtil.unwrapThrowable(e);
+        //    }
+        //  }
         resultList = executor.query(ms, parameterObject, RowBounds.DEFAULT, resultHandler, authDataKey, authDataBoundSql);
 
         //返回默认查询
