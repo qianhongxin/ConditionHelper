@@ -51,7 +51,7 @@ public class SqlUtil {
         for (String key : additionalParameters.keySet()) {
             authDataBoundSql.setAdditionalParameter(key, additionalParameters.get(key));
         }
-        // 执行查询, 当前的executor可能是代理对象，也可能是执行数据库操作的executor对象
+        // 执行查询, 当前的executor可能是下一个代理对象，也可能是执行数据库操作的executor对象
         // 如果是代理对象，则执行的是Plugin的invoke方法（Plugin是InvocationHandler）
         //public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //    try {
