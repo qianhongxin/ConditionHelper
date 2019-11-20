@@ -1,5 +1,7 @@
 package my.study.dataauthplugin.core;
 
+import my.study.dataauthplugin.core.parser.DefaultSqlParser;
+import my.study.dataauthplugin.core.parser.SqlParser;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -14,6 +16,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class SqlUtil {
+
+    private SqlParser sqlParser;
 
     private Field additionalParametersField;
 
@@ -78,56 +82,10 @@ public class SqlUtil {
         UserContext uc = UserContextHolder.userContextThreadLocal.get();
 
         for (int i = 0; i < uc.getConditions().size(); i++) {
-            sql = buildDataSql(sql, uc.getIds(), uc.getConditions().get(i));
+            sql = sqlParser.parse(sql, uc.getIds(), uc.getConditions().get(i));
         }
 
         return sql;
-    }
-
-    private String buildDataSql(String sql, List<Integer> shopIds, UserContext.Condition condition) {
-        StringBuilder sqlBuilder = new StringBuilder(sql.length() + 20);
-        String field = condition.getField();
-        String tableName = condition.getTableName();
-        // 获取字段的索引
-        int tableNameIndex = sql.indexOf("as " + tableName);
-        if(tableNameIndex == -1) {
-            tableNameIndex = sql.indexOf("AS " + tableName);
-            if(tableNameIndex == -1) {
-                tableNameIndex = sql.indexOf(tableName);
-            }
-        }
-        if(tableNameIndex == -1) {
-            return sql;
-        }
-        // 获取距离字段最近的第一个where的索引
-        int firstWhereIndex = sql.indexOf("where", tableNameIndex);
-        if(firstWhereIndex == -1) {
-            firstWhereIndex = sql.indexOf("WHERE", tableNameIndex);
-        }
-        if(firstWhereIndex == -1) {
-            return sql;
-        }
-        // 截取 字段索引 到 第一个where索引 的字符串
-        String splitTarget = sql.substring(tableNameIndex, firstWhereIndex + 5);
-
-        String[] sqlArr = sql.split(splitTarget);
-        sqlBuilder.append(sqlArr[0]);
-        sqlBuilder.append(splitTarget);
-        sqlBuilder.append(" ").append(tableName).append(".").append(field).append(" in (").append(formatIn(shopIds)).append(") and ");
-        sqlBuilder.append(sqlArr[1]);
-
-        return sqlBuilder.toString();
-    }
-
-    private String formatIn(List<Integer> shopIds) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < shopIds.size(); i++) {
-            sb.append(shopIds.get(i));
-            if(shopIds.size() - 1 != i) {
-                sb.append(",");
-            }
-        }
-        return sb.toString();
     }
 
     public void setProperties(Properties properties) {
@@ -135,6 +93,8 @@ public class SqlUtil {
             //反射获取 BoundSql 中的 additionalParameters 属性
             additionalParametersField = BoundSql.class.getDeclaredField("additionalParameters");
             additionalParametersField.setAccessible(true);
+
+            sqlParser = new DefaultSqlParser();
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
