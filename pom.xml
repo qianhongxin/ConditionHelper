@@ -8,11 +8,11 @@
         <version>2.1.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>my.study</groupId>
-    <artifactId>data-auth-plugin</artifactId>
+    <groupId>indi.xin</groupId>
+    <artifactId>condition-helper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>data-auth-plugin</name>
-    <description>data auth plugin for mybatis</description>
+    <name>condition-helper</name>
+    <description>add condition plugin for mybatis</description>
 
     <properties>
         <java.version>1.8</java.version>

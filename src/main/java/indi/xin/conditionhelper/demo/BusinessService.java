@@ -1,7 +1,7 @@
-package my.study.dataauthplugin.demo;
+package indi.xin.conditionhelper.demo;
 
-import my.study.dataauthplugin.core.DataAuthentication;
-import my.study.dataauthplugin.core.SqlSignature;
+import indi.xin.conditionhelper.core.DataAuthentication;
+import indi.xin.conditionhelper.core.SqlSignature;
 import org.springframework.stereotype.Service;
 
 @Service

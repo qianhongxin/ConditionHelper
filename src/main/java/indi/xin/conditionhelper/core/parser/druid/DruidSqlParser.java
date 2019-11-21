@@ -1,11 +1,11 @@
-package my.study.dataauthplugin.core.parser.druid;
+package indi.xin.conditionhelper.core.parser.druid;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.ast.statement.SQLTableSource;
 import com.alibaba.druid.util.JdbcConstants;
-import my.study.dataauthplugin.core.UserContext;
-import my.study.dataauthplugin.core.parser.SqlParser;
+import indi.xin.conditionhelper.core.UserContext;
+import indi.xin.conditionhelper.core.parser.SqlParser;
 
 import java.util.List;
 

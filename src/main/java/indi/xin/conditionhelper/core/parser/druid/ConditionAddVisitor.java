@@ -1,4 +1,4 @@
-package my.study.dataauthplugin.core.parser.druid;
+package indi.xin.conditionhelper.core.parser.druid;
 
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
 import com.alibaba.druid.sql.ast.statement.SQLTableSource;

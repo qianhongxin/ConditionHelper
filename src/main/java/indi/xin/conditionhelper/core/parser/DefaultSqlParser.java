@@ -1,6 +1,6 @@
-package my.study.dataauthplugin.core.parser;
+package indi.xin.conditionhelper.core.parser;
 
-import my.study.dataauthplugin.core.UserContext;
+import indi.xin.conditionhelper.core.UserContext;
 
 import java.util.List;
 

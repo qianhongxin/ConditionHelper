@@ -1,7 +1,7 @@
-package my.study.dataauthplugin.demo;
+package indi.xin.conditionhelper.demo;
 
-import my.study.dataauthplugin.core.UserContext;
-import my.study.dataauthplugin.core.UserContextHolder;
+import indi.xin.conditionhelper.core.UserContext;
+import indi.xin.conditionhelper.core.UserContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;

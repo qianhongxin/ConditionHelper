@@ -1,4 +1,4 @@
-package my.study.dataauthplugin.core;
+package indi.xin.conditionhelper.core;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

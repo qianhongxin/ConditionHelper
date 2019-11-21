@@ -1,4 +1,4 @@
-package my.study.dataauthplugin.demo;
+package indi.xin.conditionhelper.demo;
 
 import org.springframework.stereotype.Service;
 

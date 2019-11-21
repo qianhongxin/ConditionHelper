@@ -1,7 +1,7 @@
-package my.study.dataauthplugin.core;
+package indi.xin.conditionhelper.core;
 
-import my.study.dataauthplugin.core.parser.DefaultSqlParser;
-import my.study.dataauthplugin.core.parser.SqlParser;
+import indi.xin.conditionhelper.core.parser.DefaultSqlParser;
+import indi.xin.conditionhelper.core.parser.SqlParser;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;

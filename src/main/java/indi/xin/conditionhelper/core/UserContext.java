@@ -1,4 +1,4 @@
-package my.study.dataauthplugin.core;
+package indi.xin.conditionhelper.core;
 
 import java.util.ArrayList;
 import java.util.List;

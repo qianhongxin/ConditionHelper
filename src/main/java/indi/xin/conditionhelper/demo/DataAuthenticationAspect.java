@@ -1,9 +1,9 @@
-package my.study.dataauthplugin.demo;
+package indi.xin.conditionhelper.demo;
 
-import my.study.dataauthplugin.core.DataAuthentication;
-import my.study.dataauthplugin.core.SqlSignature;
-import my.study.dataauthplugin.core.UserContext;
-import my.study.dataauthplugin.core.UserContextHolder;
+import indi.xin.conditionhelper.core.DataAuthentication;
+import indi.xin.conditionhelper.core.SqlSignature;
+import indi.xin.conditionhelper.core.UserContext;
+import indi.xin.conditionhelper.core.UserContextHolder;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

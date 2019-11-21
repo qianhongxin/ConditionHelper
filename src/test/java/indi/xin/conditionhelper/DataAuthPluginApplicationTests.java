@@ -1,4 +1,4 @@
-package my.study.dataauthplugin;
+package indi.xin.conditionhelper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

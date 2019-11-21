@@ -1,4 +1,4 @@
-package my.study.dataauthplugin.core;
+package indi.xin.conditionhelper.core;
 
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
