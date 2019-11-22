@@ -24,7 +24,7 @@ public class DataAuthenticationAspect {
     @Autowired
     private AuthService authService;
 
-    @Before(value = "execution(* my.study.dataauthplugin.demo.*(..)) && @annotation(dataAuthentication)")
+    @Before(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(dataAuthentication)")
     public void getDataAuth(DataAuthentication dataAuthentication) throws Throwable {
         UserContext uc = UserContextHolder.userContextThreadLocal.get();
         if (uc != null && !"".equals(uc.getUserId()) && dataAuthentication != null) {
@@ -45,7 +45,7 @@ public class DataAuthenticationAspect {
         }
     }
 
-    @After(value = "execution(* my.study.dataauthplugin.demo.*(..)) && @annotation(dataAuthentication)")
+    @After(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(dataAuthentication)")
     public void releaseUserContext(DataAuthentication dataAuthentication) throws Throwable {
         if(dataAuthentication != null) {
             UserContextHolder.userContextThreadLocal.remove();
