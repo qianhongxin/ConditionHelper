@@ -1,6 +1,6 @@
 package indi.xin.conditionhelper;
 
-import indi.xin.conditionhelper.core.DataAuthenticationPlugin;
+import indi.xin.conditionhelper.core.SqlConditionPlugin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +11,7 @@ public class DataAuthPluginApplication {
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        DataAuthenticationPlugin dataAuthenticationPlugin = new DataAuthenticationPlugin();
+        SqlConditionPlugin dataAuthenticationPlugin = new SqlConditionPlugin();
         dataAuthenticationPlugin.setProperties(properties);
         // 将插件加入mybatis中
         SpringApplication.run(DataAuthPluginApplication.class, args);

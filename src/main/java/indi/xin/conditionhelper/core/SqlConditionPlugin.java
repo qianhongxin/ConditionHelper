@@ -12,7 +12,7 @@ import java.util.Properties;
 
 @Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class})})
-public class DataAuthenticationPlugin implements Interceptor {
+public class SqlConditionPlugin implements Interceptor {
 
     private final SqlUtil sqlUtil = new SqlUtil();
 

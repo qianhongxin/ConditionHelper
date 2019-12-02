@@ -1,6 +1,6 @@
 package indi.xin.conditionhelper.demo;
 
-import indi.xin.conditionhelper.core.DataAuthentication;
+import indi.xin.conditionhelper.core.SqlCondition;
 import indi.xin.conditionhelper.core.SqlSignature;
 import indi.xin.conditionhelper.core.UserContext;
 import indi.xin.conditionhelper.core.UserContextHolder;
@@ -24,15 +24,15 @@ public class DataAuthenticationAspect {
     @Autowired
     private AuthService authService;
 
-    @Before(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(dataAuthentication)")
-    public void getDataAuth(DataAuthentication dataAuthentication) throws Throwable {
+    @Before(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(sqlCondition)")
+    public void getDataAuth(SqlCondition sqlCondition) throws Throwable {
         UserContext uc = UserContextHolder.userContextThreadLocal.get();
-        if (uc != null && !"".equals(uc.getUserId()) && dataAuthentication != null) {
+        if (uc != null && !"".equals(uc.getUserId()) && sqlCondition != null) {
             List<Integer> ids = authService.getIds(uc.getUserId());
             if (ids != null && !ids.isEmpty()) {
                 List<String> fields = new ArrayList<>();
                 List<String> tableNames = new ArrayList<>();
-                SqlSignature[] signatures = dataAuthentication.value();
+                SqlSignature[] signatures = sqlCondition.value();
                 if(signatures.length > 0) {
                     for (int i = 0; i < signatures.length; i++) {
                         fields.add(signatures[i].field());
@@ -45,9 +45,9 @@ public class DataAuthenticationAspect {
         }
     }
 
-    @After(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(dataAuthentication)")
-    public void releaseUserContext(DataAuthentication dataAuthentication) throws Throwable {
-        if(dataAuthentication != null) {
+    @After(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(sqlCondition)")
+    public void releaseUserContext(SqlCondition sqlCondition) throws Throwable {
+        if(sqlCondition != null) {
             UserContextHolder.userContextThreadLocal.remove();
         }
     }

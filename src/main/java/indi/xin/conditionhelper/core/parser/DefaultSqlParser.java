@@ -6,19 +6,16 @@ import java.util.List;
 
 public class DefaultSqlParser implements SqlParser {
 
-    private <T> String formatIn(List<T> values) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < values.size(); i++) {
-            sb.append(values.get(i));
-            if(values.size() - 1 != i) {
-                sb.append(",");
-            }
+    @Override
+    public <T> String parse(String sql, List<T> values, List<UserContext.Condition> conditions) {
+        for (int i = 0; i < conditions.size(); i++) {
+            sql = parseInteral(sql, values, conditions.get(i));
         }
-        return sb.toString();
+
+        return sql;
     }
 
-    @Override
-    public <T> String parse(String sql, List<T> values, UserContext.Condition condition) {
+    public <T> String parseInteral(String sql, List<T> values, UserContext.Condition condition) {
         StringBuilder sqlBuilder = new StringBuilder(sql.length() + 20);
         String field = condition.getField();
         String tableName = condition.getTableName();
@@ -51,5 +48,16 @@ public class DefaultSqlParser implements SqlParser {
         sqlBuilder.append(sqlArr[1]);
 
         return sqlBuilder.toString();
+    }
+
+    private <T> String formatIn(List<T> values) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.size(); i++) {
+            sb.append(values.get(i));
+            if(values.size() - 1 != i) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 }

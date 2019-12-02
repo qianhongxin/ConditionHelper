@@ -30,7 +30,7 @@ public class UserContext {
 
     }
 
-    public class Condition {
+    public class Condition<T> {
         private String field;
 
         private String tableName;
@@ -49,6 +49,29 @@ public class UserContext {
 
         public void setTableName(String tableName) {
             this.tableName = tableName;
+        }
+
+        public String buildConditionSql(List<T> values) {
+            assert values != null && !values.isEmpty();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(tableName);
+            sb.append(".");
+            sb.append(field);
+            sb.append(" in ");
+
+            sb.append("(");
+            for (int i = 0; i < values.size(); i++) {
+                if(i == 0) {
+                    sb.append(values.get(i));
+                    continue;
+                }
+                sb.append(",");
+                sb.append(values.get(i));
+            }
+            sb.append(")");
+
+            return sb.toString();
         }
     }
 

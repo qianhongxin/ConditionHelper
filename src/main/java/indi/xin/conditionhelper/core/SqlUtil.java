@@ -81,9 +81,7 @@ public class SqlUtil {
         String sql = boundSql.getSql();
         UserContext uc = UserContextHolder.userContextThreadLocal.get();
 
-        for (int i = 0; i < uc.getConditions().size(); i++) {
-            sql = sqlParser.parse(sql, uc.getIds(), uc.getConditions().get(i));
-        }
+        sqlParser.parse(sql, uc.getIds(), uc.getConditions());
 
         return sql;
     }
