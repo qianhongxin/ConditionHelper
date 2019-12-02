@@ -12,4 +12,6 @@ public @interface SqlSignature {
     String field();
 
     String tableName();
+
+    ConditionType conditionType();
 }

@@ -1,13 +1,13 @@
 package indi.xin.conditionhelper.core.parser;
 
-import indi.xin.conditionhelper.core.UserContext;
+import indi.xin.conditionhelper.core.ConditionContext;
 
 import java.util.List;
 
 public class DefaultSqlParser implements SqlParser {
 
     @Override
-    public <T> String parse(String sql, List<T> values, List<UserContext.Condition> conditions) {
+    public <T> String parse(String sql, List<T> values, List<ConditionContext.Condition> conditions) {
         for (int i = 0; i < conditions.size(); i++) {
             sql = parseInteral(sql, values, conditions.get(i));
         }
@@ -15,7 +15,7 @@ public class DefaultSqlParser implements SqlParser {
         return sql;
     }
 
-    public <T> String parseInteral(String sql, List<T> values, UserContext.Condition condition) {
+    public <T> String parseInteral(String sql, List<T> values, ConditionContext.Condition condition) {
         StringBuilder sqlBuilder = new StringBuilder(sql.length() + 20);
         String field = condition.getField();
         String tableName = condition.getTableName();

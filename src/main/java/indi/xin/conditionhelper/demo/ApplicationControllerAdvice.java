@@ -1,7 +1,7 @@
 package indi.xin.conditionhelper.demo;
 
-import indi.xin.conditionhelper.core.UserContext;
-import indi.xin.conditionhelper.core.UserContextHolder;
+import indi.xin.conditionhelper.core.ConditionContext;
+import indi.xin.conditionhelper.core.ConditionContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +19,7 @@ public class ApplicationControllerAdvice {
         if(userId != null) {
             UserContext userContext = new UserContext();
             userContext.setUserId(userId);
-            UserContextHolder.userContextThreadLocal.set(userContext);
+            ConditionContextHolder.userContextThreadLocal.set(userContext);
         }
     }
 

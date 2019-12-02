@@ -3,10 +3,7 @@ package indi.xin.conditionhelper.core.parser.druid;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlASTVisitorAdapter;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConditionAddVisitor extends MySqlASTVisitorAdapter {
 
@@ -36,13 +33,13 @@ public class ConditionAddVisitor extends MySqlASTVisitorAdapter {
             String tableNamePoint = sb.toString();
 
             // 不包含当前的tableName，就结束当前循环
-            if(from.contains(tableNamePoint)) {
+            if(!from.contains(tableNamePoint)) {
                 continue;
             }
 
             String firstFrom = targetTableFirstFromMap.get(tableNamePoint);
             List<MySqlSelectQueryBlock> sqlSelectQueryBlocks = blockMap.get(tableName);
-            if(firstFrom != null && firstFrom.contains(from)) {
+            if(firstFrom != null && isContains(firstFrom, from)) { //fixme 判断是否包含
                 // 删除父级，即最外层的block
                 if(sqlSelectQueryBlocks != null && !sqlSelectQueryBlocks.isEmpty()) {
                     sqlSelectQueryBlocks.remove(0);
@@ -61,6 +58,46 @@ public class ConditionAddVisitor extends MySqlASTVisitorAdapter {
 
         return true;
     }
+
+//    private boolean isContains(String firstFrom, String from) {
+//        from.
+//    }
+//
+//    private String format(String sql) {
+//        List<String> sqlList = new ArrayList<>();
+//        if(sql.contains("\n\t")){
+//            String[] sqlArr = sql.split("\n\t");
+//            for (String s : sqlArr) {
+//                if(s.contains("\n")) {
+//                    String[] sqls = s.split("\n");
+//                    for (String sql1 : sqls) {
+//                        sqlList.add(sql1);
+//                    }
+//                }else{
+//                    sqlList.add(s);
+//                }
+//            }
+//        }else if(sql.contains("\n")) {
+//            String[] sqls = sql.split("\n");
+//            for (String sql1 : sqls) {
+//                sqlList.add(sql1);
+//            }
+//        }else {
+//            sqlList.add(sql);
+//        }
+//
+//        StringBuilder sb = new StringBuilder();
+//        if (!sqlList.isEmpty()) {
+//            for (String s : sqlList) {
+//                sb.append(s);
+//                sb.append(" ");
+//            }
+//        }
+//
+//        sql = sb.toString();
+//
+//        return sql;
+//    }
 
     public Map<String, List<MySqlSelectQueryBlock>> getBlockMap() {
         return blockMap;

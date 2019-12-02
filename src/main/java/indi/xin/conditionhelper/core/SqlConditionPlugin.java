@@ -23,8 +23,8 @@ public class SqlConditionPlugin implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
-        UserContext uc = UserContextHolder.userContextThreadLocal.get();
-        if(uc != null && uc.getConditions() != null && !uc.getConditions().isEmpty() && uc.getIds() != null && !uc.getIds().isEmpty() && uc.getUserId() != null) {
+        ConditionContext uc = ConditionContextHolder.userContextThreadLocal.get();
+        if(uc != null && uc.getConditions() != null && !uc.getConditions().isEmpty()) {
             return Plugin.wrap(target, this);
         }
         return target;

@@ -1,18 +1,18 @@
 package indi.xin.conditionhelper.core;
 
+import indi.xin.conditionhelper.core.type.SQLTypeHandler;
+import indi.xin.conditionhelper.core.type.SQLTypeHandlerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class UserContext {
-
-    private String userId;
-
-    private List<Integer> ids;
+public class ConditionContext {
 
     private List<Condition> conditions;
 
-    public void init(List<Integer> ids, List<String> fields, List<String> tableNames) {
-        this.setIds(ids);
+    public <T> void init(List<String> fields, List<String> tableNames,
+                     List<ConditionType> conditionTypes, Map<Integer, List<T>> valueMap) {
         if(fields.size() != tableNames.size()) {
             throw new RuntimeException("条件设置错误");
         }
@@ -23,6 +23,10 @@ public class UserContext {
                 Condition condition = new Condition();
                 condition.setField(fields.get(i));
                 condition.setTableName(tableNames.get(i));
+                condition.setConditionType(conditionTypes.get(i));
+                condition.setValues(valueMap.get(i));
+                condition.setSqlTypeHandler(SQLTypeHandlerFactory.build(conditionTypes.get(i)));
+
                 conditions.add(condition);
             }
             this.setConditions(conditions);
@@ -31,9 +35,40 @@ public class UserContext {
     }
 
     public class Condition<T> {
+
         private String field;
 
         private String tableName;
+
+        private ConditionType conditionType;
+
+        private List<T> values;
+
+        private SQLTypeHandler sqlTypeHandler;
+
+        public SQLTypeHandler getSqlTypeHandler() {
+            return sqlTypeHandler;
+        }
+
+        public void setSqlTypeHandler(SQLTypeHandler sqlTypeHandler) {
+            this.sqlTypeHandler = sqlTypeHandler;
+        }
+
+        public List<T> getValues() {
+            return values;
+        }
+
+        public void setValues(List<T> values) {
+            this.values = values;
+        }
+
+        public ConditionType getConditionType() {
+            return conditionType;
+        }
+
+        public void setConditionType(ConditionType conditionType) {
+            this.conditionType = conditionType;
+        }
 
         public String getField() {
             return field;
@@ -58,8 +93,9 @@ public class UserContext {
             sb.append(tableName);
             sb.append(".");
             sb.append(field);
-            sb.append(" in ");
+            sb.append(conditionType.getValue()); //fixme
 
+            //fixme
             sb.append("(");
             for (int i = 0; i < values.size(); i++) {
                 if(i == 0) {
@@ -83,19 +119,4 @@ public class UserContext {
         this.conditions = conditions;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public List<Integer> getIds() {
-        return ids;
-    }
-
-    public void setIds(List<Integer> ids) {
-        this.ids = ids;
-    }
 }
