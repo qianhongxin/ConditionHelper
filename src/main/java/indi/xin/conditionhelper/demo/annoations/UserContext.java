@@ -1,4 +1,4 @@
-package indi.xin.conditionhelper.demo;
+package indi.xin.conditionhelper.demo.annoations;
 
 import indi.xin.conditionhelper.core.ConditionContext;
 

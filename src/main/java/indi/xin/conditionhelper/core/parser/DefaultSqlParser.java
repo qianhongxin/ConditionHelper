@@ -1,32 +1,38 @@
 package indi.xin.conditionhelper.core.parser;
 
+import indi.xin.conditionhelper.core.Condition;
 import indi.xin.conditionhelper.core.ConditionContext;
+import indi.xin.conditionhelper.core.exception.SqlParseException;
 
 import java.util.List;
 
 /**
- * @author 32415
+ * @author hongxin.qian
  * @description: 默认的sql条件拼接器
  * @time 2019/12/3
  **/
 public class DefaultSqlParser implements SqlParser {
 
     @Override
-    public String parse(String sql, List<ConditionContext.Condition> conditions) {
-        for (int i = 0; i < conditions.size(); i++) {
-            sql = parseInteral(sql, conditions.get(i));
-        }
+    public String parse(String sql, List<Condition> conditions) {
+        try {
+            for (int i = 0; i < conditions.size(); i++) {
+                sql = parseInteral(sql, conditions.get(i));
+            }
 
-        return sql;
+            return sql;
+        }catch (Exception e) {
+            throw new SqlParseException("default sql parser parse exception");
+        }
     }
 
     /**
      * @Description: 将要拼接的条件放到where后的第一个条件
      *
-     * @author: 32415
+     * @author: hongxin.qian
      * @time: 2019/12/3 10:25
      */
-    public String parseInteral(String sql, ConditionContext.Condition condition) {
+    public String parseInteral(String sql, Condition condition) {
         StringBuilder sqlBuilder = new StringBuilder( sql.length() + 20);
 
         // 定位目标字符串
@@ -44,7 +50,7 @@ public class DefaultSqlParser implements SqlParser {
     /**
      * @Description: 定位目标字符串
      *
-     * @author: 32415
+     * @author: hongxin.qian
      * @time: 2019/12/3 10:25
      */
     private String indexTarget(String tableName, String sql) {

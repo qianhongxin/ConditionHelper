@@ -3,7 +3,7 @@ package indi.xin.conditionhelper.core.type;
 import java.util.List;
 
 /**
- * @author 32415
+ * @author hongxin.qian
  * @description: 处理 between 条件
  * @time 2019/12/3
  **/

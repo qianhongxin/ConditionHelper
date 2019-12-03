@@ -1,6 +1,5 @@
-package indi.xin.conditionhelper.demo;
+package indi.xin.conditionhelper.demo.annoations;
 
-import indi.xin.conditionhelper.core.ConditionContext;
 import indi.xin.conditionhelper.core.ConditionContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;

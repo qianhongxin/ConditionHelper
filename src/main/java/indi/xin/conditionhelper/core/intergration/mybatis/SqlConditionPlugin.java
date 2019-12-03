@@ -1,5 +1,7 @@
-package indi.xin.conditionhelper.core;
+package indi.xin.conditionhelper.core.intergration.mybatis;
 
+import indi.xin.conditionhelper.core.ConditionContext;
+import indi.xin.conditionhelper.core.ConditionContextHolder;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;

@@ -1,6 +1,9 @@
-package indi.xin.conditionhelper.demo;
+package indi.xin.conditionhelper.demo.annoations;
 
 import indi.xin.conditionhelper.core.*;
+import indi.xin.conditionhelper.core.start.ConditionHelper;
+import indi.xin.conditionhelper.core.start.annoations.SqlCondition;
+import indi.xin.conditionhelper.core.start.annoations.SqlSignature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,7 +17,7 @@ import java.util.Map;
 
 /**
  * @Description: 数据权限切面
- * @author: 32415
+ * @author: hongxin.qian
  */
 @Aspect
 @Component
@@ -42,10 +45,12 @@ public class DataAuthenticationAspect {
                         tableNames.add(signatures[i].tableName());
                         conditionTypes.add(signatures[i].conditionType());
                         valueMap.put(i, ids);
-                    }
-                }
 
-                uc.init(fields, tableNames, conditionTypes, valueMap);
+                        ConditionHelper.addCondition(signatures[i].field(), signatures[i].tableName(),
+                                signatures[i].conditionType(), ids);
+                    }
+                    ConditionHelper.startCondition();
+                }
             }
         }
     }

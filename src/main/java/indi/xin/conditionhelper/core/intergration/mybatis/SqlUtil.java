@@ -1,5 +1,8 @@
-package indi.xin.conditionhelper.core;
+package indi.xin.conditionhelper.core.intergration.mybatis;
 
+import indi.xin.conditionhelper.core.ConditionContext;
+import indi.xin.conditionhelper.core.ConditionContextHolder;
+import indi.xin.conditionhelper.core.start.ConditionHelper;
 import indi.xin.conditionhelper.core.parser.DefaultSqlParser;
 import indi.xin.conditionhelper.core.parser.SqlParser;
 import org.apache.ibatis.cache.CacheKey;
@@ -24,7 +27,11 @@ public class SqlUtil {
     private Properties properties;
 
     public Object intercept(Invocation invocation) throws Throwable {
-        return doIntercept(invocation);
+        try {
+            return doIntercept(invocation);
+        }finally {
+            ConditionHelper.clearLocalConditions();
+        }
     }
 
     // Pagehelper插件中有不分页时，intercept中执行resultList = (List) invocation.proceed();直接执行当前pagehelper代理对象的目标对象的调用。

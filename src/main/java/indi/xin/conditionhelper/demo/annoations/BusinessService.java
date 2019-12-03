@@ -1,8 +1,8 @@
-package indi.xin.conditionhelper.demo;
+package indi.xin.conditionhelper.demo.annoations;
 
 import indi.xin.conditionhelper.core.ConditionType;
-import indi.xin.conditionhelper.core.SqlCondition;
-import indi.xin.conditionhelper.core.SqlSignature;
+import indi.xin.conditionhelper.core.start.annoations.SqlCondition;
+import indi.xin.conditionhelper.core.start.annoations.SqlSignature;
 import org.springframework.stereotype.Service;
 
 @Service

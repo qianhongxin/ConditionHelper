@@ -1,4 +1,6 @@
-package indi.xin.conditionhelper.core;
+package indi.xin.conditionhelper.core.start.annoations;
+
+import indi.xin.conditionhelper.core.ConditionType;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
