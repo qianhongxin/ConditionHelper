@@ -2,6 +2,7 @@ package indi.xin.conditionhelper.core.intergration.mybatis;
 
 import indi.xin.conditionhelper.core.ConditionContext;
 import indi.xin.conditionhelper.core.ConditionContextHolder;
+import indi.xin.conditionhelper.core.util.ConditionContextUtil;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -25,10 +26,10 @@ public class SqlConditionPlugin implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
-        ConditionContext uc = ConditionContextHolder.conditionContextThreadLocal.get();
-        if(uc != null && uc.getConditions() != null && !uc.getConditions().isEmpty()) {
+        if(ConditionContextUtil.isEmpty()) {
             return Plugin.wrap(target, this);
         }
+
         return target;
     }
 
