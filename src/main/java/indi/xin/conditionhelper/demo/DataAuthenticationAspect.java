@@ -25,7 +25,7 @@ public class DataAuthenticationAspect {
 
     @Before(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(sqlCondition)")
     public void getDataAuth(SqlCondition sqlCondition) throws Throwable {
-        ConditionContext cc = ConditionContextHolder.userContextThreadLocal.get();
+        ConditionContext cc = ConditionContextHolder.conditionContextThreadLocal.get();
         UserContext uc = (UserContext) cc;
 
         if (uc != null && !"".equals(uc.getUserId()) && sqlCondition != null) {
@@ -53,7 +53,7 @@ public class DataAuthenticationAspect {
     @After(value = "execution(* indi.xin.conditionhelper.demo.*(..)) && @annotation(sqlCondition)")
     public void releaseUserContext(SqlCondition sqlCondition) throws Throwable {
         if(sqlCondition != null) {
-            ConditionContextHolder.userContextThreadLocal.remove();
+            ConditionContextHolder.conditionContextThreadLocal.remove();
         }
     }
 

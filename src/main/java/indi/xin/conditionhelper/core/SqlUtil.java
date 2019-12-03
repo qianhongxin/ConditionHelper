@@ -79,9 +79,9 @@ public class SqlUtil {
 
     private String getAuthDataSql(MappedStatement ms, BoundSql boundSql, Object parameterObject, RowBounds rowBounds, CacheKey authDataKey) {
         String sql = boundSql.getSql();
-        ConditionContext uc = ConditionContextHolder.userContextThreadLocal.get();
+        ConditionContext uc = ConditionContextHolder.conditionContextThreadLocal.get();
 
-        sqlParser.parse(sql, uc.getIds(), uc.getConditions());
+        sqlParser.parse(sql, uc.getConditions());
 
         return sql;
     }

@@ -25,7 +25,7 @@ public class ConditionContext {
                 condition.setTableName(tableNames.get(i));
                 condition.setConditionType(conditionTypes.get(i));
                 condition.setValues(valueMap.get(i));
-                condition.setSqlTypeHandler(SQLTypeHandlerFactory.build(conditionTypes.get(i)));
+                condition.setSqlTypeHandler(SQLTypeHandlerFactory.createTypeHandler(conditionTypes.get(i)));
 
                 conditions.add(condition);
             }
@@ -86,26 +86,14 @@ public class ConditionContext {
             this.tableName = tableName;
         }
 
-        public String buildConditionSql(List<T> values) {
+        public String buildConditionSql() {
             assert values != null && !values.isEmpty();
 
             StringBuilder sb = new StringBuilder();
             sb.append(tableName);
             sb.append(".");
             sb.append(field);
-            sb.append(conditionType.getValue()); //fixme
-
-            //fixme
-            sb.append("(");
-            for (int i = 0; i < values.size(); i++) {
-                if(i == 0) {
-                    sb.append(values.get(i));
-                    continue;
-                }
-                sb.append(",");
-                sb.append(values.get(i));
-            }
-            sb.append(")");
+            sb.append(sqlTypeHandler.build(values));
 
             return sb.toString();
         }

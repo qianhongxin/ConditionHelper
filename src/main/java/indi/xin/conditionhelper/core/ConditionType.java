@@ -14,5 +14,5 @@ public enum ConditionType {
     GE,
     LE,
     NOT_IN,
-    BETWEEN;
+    BETWEEN
 }

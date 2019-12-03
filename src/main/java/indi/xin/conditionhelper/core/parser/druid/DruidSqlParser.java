@@ -31,17 +31,15 @@ public class DruidSqlParser implements SqlParser {
 
     }
 
-    public <T> String parseInteral(List<T> values, List<ConditionContext.Condition> conditions) {
+    public String parseInteral(List<ConditionContext.Condition> conditions) {
         ConditionAddVisitor visitor = getVisitor();
         Map<String, List<MySqlSelectQueryBlock>> blockMap = visitor.getBlockMap();
 
         conditions.forEach(condition -> {
-            String conditionSql = condition.buildConditionSql(values);
+            String conditionSql = condition.buildConditionSql();
             List<MySqlSelectQueryBlock> queryBlocks = blockMap.get(condition.getTableName());
             if(queryBlocks != null && !queryBlocks.isEmpty()) {
-                queryBlocks.forEach(queryBlock -> {
-                    queryBlock.addCondition(conditionSql);
-                });
+                queryBlocks.forEach(queryBlock -> queryBlock.addCondition(conditionSql));
             }
         });
 
@@ -119,9 +117,9 @@ public class DruidSqlParser implements SqlParser {
     }
 
     @Override
-    public <T> String parse(String sql, List<T> values, List<ConditionContext.Condition> conditions) {
+    public String parse(String sql, List<ConditionContext.Condition> conditions) {
         parseSqlBlocks(sql, conditions);
-        return parseInteral(values, conditions);
+        return parseInteral(conditions);
     }
 
     public ConditionAddVisitor getVisitor() {

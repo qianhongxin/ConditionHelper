@@ -19,7 +19,7 @@ public class ApplicationControllerAdvice {
         if(userId != null) {
             UserContext userContext = new UserContext();
             userContext.setUserId(userId);
-            ConditionContextHolder.userContextThreadLocal.set(userContext);
+            ConditionContextHolder.conditionContextThreadLocal.set(userContext);
         }
     }
 
