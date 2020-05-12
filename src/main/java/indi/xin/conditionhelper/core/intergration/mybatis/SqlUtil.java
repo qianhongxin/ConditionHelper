@@ -47,6 +47,7 @@ public class SqlUtil {
         ResultHandler resultHandler = (ResultHandler) args[3];
         //当前的目标对象
         Executor executor = (Executor) invocation.getTarget();
+        // 如果不是CachingExecutor，从executor的6个参数的query方法中取BoundSql。否则是4个参数的executor从ms中取
         BoundSql boundSql = args.length == 6 ? (BoundSql) args[5] : ms.getBoundSql(parameterObject);
         //反射获取动态参数
         Map<String, Object> additionalParameters = (Map<String, Object>) additionalParametersField.get(ms.getBoundSql(parameterObject));
