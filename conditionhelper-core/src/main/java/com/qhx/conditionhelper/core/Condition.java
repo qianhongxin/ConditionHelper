@@ -36,6 +36,7 @@ public class Condition<T> {
         sb.append(tableName);
         sb.append(".");
         sb.append(field);
+        sb.append(conditionType.getName());
         sb.append(sqlTypeHandler.build(values));
 
         return sb.toString();

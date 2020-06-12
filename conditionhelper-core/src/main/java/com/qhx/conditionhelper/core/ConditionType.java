@@ -7,12 +7,29 @@ package com.qhx.conditionhelper.core;
  */
 public enum ConditionType {
 
-    IN,
-    EQ,
-    GT,
-    LT,
-    GE,
-    LE,
-    NOT_IN,
-    BETWEEN
+    IN("IN", "IN"),
+    EQ("=", "EQ"),
+    GT(">", "GT"),
+    LT("<", "LT"),
+    GE(">=", "GE"),
+    LE("<=", "LE"),
+    NOT_IN("NOT_IN", "NOT_IN"),
+    BETWEEN("BETWEEN", "BETWEEN");
+
+    private String name;
+
+    private String desc;
+
+    ConditionType(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }
