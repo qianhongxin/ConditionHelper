@@ -13,7 +13,7 @@ public enum ConditionType {
     LT("<", "LT"),
     GE(">=", "GE"),
     LE("<=", "LE"),
-    NOT_IN("NOT_IN", "NOT_IN"),
+    NOT_IN("NOT IN", "NOT_IN"),
     BETWEEN("BETWEEN", "BETWEEN");
 
     private String name;
